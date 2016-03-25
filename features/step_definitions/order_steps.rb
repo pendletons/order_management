@@ -85,3 +85,11 @@ end
 Then(/^it can be moved to (.*) state$/) do |state|
   pending # Write code here that turns the phrase above into concrete actions
 end
+
+Given(/^the order has a line item$/) do
+  pending # Write code here that turns the phrase above into concrete actions
+end
+
+Then(/^the order has no line items$/) do
+  pending # Write code here that turns the phrase above into concrete actions
+end

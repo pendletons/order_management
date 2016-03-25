@@ -37,3 +37,23 @@ end
 When(/^its quantity is -?(\d+)$/) do |quantity|
   pending # Write code here that turns the phrase above into concrete actions
 end
+
+When(/^valid line item information is provided$/) do
+  pending # Write code here that turns the phrase above into concrete actions
+end
+
+Then(/^a line item will be created$/) do
+  pending # Write code here that turns the phrase above into concrete actions
+end
+
+When(/^valid line item update information is provided$/) do
+  pending # Write code here that turns the phrase above into concrete actions
+end
+
+Then(/^the line item will be updated$/) do
+  pending # Write code here that turns the phrase above into concrete actions
+end
+
+When(/^the line item is deleted$/) do
+  pending # Write code here that turns the phrase above into concrete actions
+end
