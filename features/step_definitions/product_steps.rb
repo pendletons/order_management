@@ -27,9 +27,9 @@ Then(/^a product will be created$/) do
 end
 
 When(/^valid product update information is provided$/) do
-  pending # Write code here that turns the phrase above into concrete actions
+  @attr = attributes_for(:product).merge(price: 2500)
 end
 
 Then(/^the product will be updated$/) do
-  pending # Write code here that turns the phrase above into concrete actions
+  expect { @product.update! @attr }.not_to raise_error
 end

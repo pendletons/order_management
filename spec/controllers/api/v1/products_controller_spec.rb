@@ -76,8 +76,8 @@ RSpec.describe Api::V1::ProductsController, type: :controller do
 
       it "renders the product in JSON" do
         subject
-        product = JSON.parse(response.body, symbolize_names: true)
-        expect(product).to eq attr
+        product_response = JSON.parse(response.body, symbolize_names: true)
+        expect(product_response).to eq(product: attr.merge(id: product.id))
       end
 
       it "succeeds" do
@@ -90,13 +90,14 @@ RSpec.describe Api::V1::ProductsController, type: :controller do
       let(:attr) { attributes_for(:product).merge(price: "moneyz") }
 
       it "does not update the product" do
-        expect { subject }.not_to change{Product.count}
+        subject
+        expect(product.price).to eq 1000
       end
 
       it "renders the errors in JSON" do
         subject
         product = JSON.parse(response.body, symbolize_names: true)
-        expect(product[:errors]).to eq(price: "must be an integer")
+        expect(product[:errors]).to eq(price: ["is not a number"])
       end
 
       it "fails" do
