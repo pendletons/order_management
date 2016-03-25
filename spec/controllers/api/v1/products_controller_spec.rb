@@ -5,7 +5,7 @@ RSpec.describe Api::V1::ProductsController, type: :controller do
 
   describe "#create" do
     let(:attr) { attributes_for(:product) }
-    subject { post :create, attr, format: :json }
+    subject { post :create, product: attr, format: :json }
 
     context "with valid attributes" do
       it "creates a product" do
@@ -14,8 +14,8 @@ RSpec.describe Api::V1::ProductsController, type: :controller do
 
       it "renders the product in JSON" do
         subject
-        product = JSON.parse(response.body, symbolize_names: true)
-        expect(product).to eq attr
+        product_response = JSON.parse(response.body, symbolize_names: true)
+        expect(product_response).to eq(product: attr.merge(id: Product.last.id))
       end
 
       it "succeeds" do
@@ -34,7 +34,7 @@ RSpec.describe Api::V1::ProductsController, type: :controller do
       it "renders the errors in JSON" do
         subject
         product = JSON.parse(response.body, symbolize_names: true)
-        expect(product[:errors]).to eq(name: "can't be blank")
+        expect(product[:errors]).to eq(name: ["can't be blank"])
       end
 
       it "fails" do

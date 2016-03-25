@@ -19,11 +19,11 @@ Then(/^the product is deletable$/) do
 end
 
 When(/^valid product information is provided$/) do
-  pending # Write code here that turns the phrase above into concrete actions
+  @attr = attributes_for(:product)
 end
 
 Then(/^a product will be created$/) do
-  pending # Write code here that turns the phrase above into concrete actions
+  expect { Product.create! @attr }.not_to raise_error
 end
 
 When(/^valid product update information is provided$/) do
