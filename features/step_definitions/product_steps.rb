@@ -1,5 +1,5 @@
 Given(/^a product exists$/) do
-  pending # Write code here that turns the phrase above into concrete actions
+  @product = create(:product)
 end
 
 When(/^an order does exist for that product$/) do

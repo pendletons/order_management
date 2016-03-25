@@ -21,4 +21,5 @@ group :test do
   gem 'simplecov', require: false
   gem 'factory_girl_rails'
   gem 'shoulda-matchers', '~> 3.1'
+  gem 'ffaker'
 end
