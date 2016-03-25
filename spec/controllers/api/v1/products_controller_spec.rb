@@ -1,9 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe Api::V1::ProductsController, type: :controller do
+  before(:each) { request.headers['Accept'] = "application/vnd.marketplace.v1" }
+
   describe "#create" do
     let(:attr) { attributes_for(:product) }
-    subject { post :create, attr }
+    subject { post :create, attr, format: :json }
 
     context "with valid attributes" do
       it "creates a product" do
@@ -44,13 +46,13 @@ RSpec.describe Api::V1::ProductsController, type: :controller do
 
   describe "#show" do
     let(:product) { create(:product) }
-    subject { get :show, id: product }
+    subject { get :show, id: product, format: :json }
 
     context "with valid product" do
       it "renders the product in JSON" do
         subject
-        product = JSON.parse(response.body, symbolize_names: true)
-        expect(product).to eq attr
+        product_response = JSON.parse(response.body, symbolize_names: true)
+        expect(product_response).to eq(product: product.attributes.symbolize_keys.except(:created_at, :updated_at))
       end
 
       it "succeeds" do
@@ -64,7 +66,7 @@ RSpec.describe Api::V1::ProductsController, type: :controller do
     let(:product) { create(:product) }
     let(:attr) { attributes_for(:product).merge(price: 2000) }
 
-    before { put :update, id: product, product: attr }
+    before { put :update, id: product, product: attr, format: :json }
 
     context "with valid attributes" do
       it "updates the product" do
@@ -107,7 +109,7 @@ RSpec.describe Api::V1::ProductsController, type: :controller do
   describe "#destroy" do
     let(:product) { create(:product) }
 
-    subject { delete :destroy, id: product }
+    subject { delete :destroy, id: product, format: :json }
 
     context "with existing orders" do
       it "does not delete the product" do
