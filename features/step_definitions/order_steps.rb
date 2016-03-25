@@ -41,3 +41,7 @@ end
 When(/^an order date is specified in the past$/) do
   pending # Write code here that turns the phrase above into concrete actions
 end
+
+Then(/^the order VAT amount is (\d+)%$/) do |percent|
+  pending # Write code here that turns the phrase above into concrete actions
+end
