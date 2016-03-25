@@ -19,4 +19,6 @@ group :test do
   gem 'cucumber-rails', require: false
   gem 'database_cleaner'
   gem 'simplecov', require: false
+  gem 'factory_girl_rails'
+  gem 'shoulda-matchers', '~> 3.1'
 end

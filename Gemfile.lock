@@ -74,6 +74,11 @@ GEM
     diff-lcs (1.2.5)
     docile (1.1.5)
     erubis (2.7.0)
+    factory_girl (4.5.0)
+      activesupport (>= 3.0.0)
+    factory_girl_rails (4.6.0)
+      factory_girl (~> 4.5.0)
+      railties (>= 3.0.0)
     gherkin (3.2.0)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
@@ -138,6 +143,8 @@ GEM
       rspec-mocks (~> 3.4.0)
       rspec-support (~> 3.4.0)
     rspec-support (3.4.1)
+    shoulda-matchers (3.1.1)
+      activesupport (>= 4.0.0)
     simplecov (0.11.2)
       docile (~> 1.1.0)
       json (~> 1.8)
@@ -171,9 +178,11 @@ DEPENDENCIES
   byebug
   cucumber-rails
   database_cleaner
+  factory_girl_rails
   pg (~> 0.15)
   rails (= 4.2.5)
   rspec-rails
+  shoulda-matchers (~> 3.1)
   simplecov
   spring
   web-console (~> 2.0)
