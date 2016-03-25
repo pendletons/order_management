@@ -108,19 +108,38 @@ RSpec.describe Api::V1::ProductsController, type: :controller do
   end
 
   describe "#destroy" do
-    let(:product) { create(:product) }
+    let!(:product) { create(:product) }
 
     subject { delete :destroy, id: product, format: :json }
 
     context "with existing orders" do
+      let(:order) { create(:order) }
+      let!(:line_item) { create(:line_item, order: order, product: product) }
+
       it "does not delete the product" do
         expect { subject }.not_to change{Product.count}
+      end
+
+      it "renders the errors in JSON" do
+        subject
+        product = JSON.parse(response.body, symbolize_names: true)
+        expect(product[:errors]).to eq(base: ["Cannot delete a product that has been ordered."])
+      end
+
+      it "fails" do
+        subject
+        expect(response.status).to eq(422)
       end
     end
 
     context "with no orders" do
       it "deletes the product" do
         expect { subject }.to change{Product.count}.by(-1)
+      end
+
+      it "succeeds" do
+        subject
+        expect(response.status).to eq(204)
       end
     end
   end

@@ -1,4 +1,6 @@
 class Api::V1::ProductsController < ApplicationController
+  before_action :load_product, except: [:create]
+
   def create
     product = Product.new(product_params)
     if product.save
@@ -9,22 +11,30 @@ class Api::V1::ProductsController < ApplicationController
   end
 
   def show
-    respond_with Product.find(params[:id])
+    respond_with @product
   end
 
   def update
-    product = Product.find(params[:id])
-    if product.update(product_params)
-      render json: product, status: 200, location: [:api, product]
+    if @product.update(product_params)
+      render json: @product, status: 200, location: [:api, @product]
     else
-      render json: { errors: product.errors }, status: 422
+      render json: { errors: @product.errors }, status: 422
     end
   end
 
   def destroy
+    if @product.destroy
+      head 204
+    else
+      render json: { errors: @product.errors }, status: 422
+    end
   end
 
   private
+
+    def load_product
+      @product = Product.find(params[:id])
+    end
 
     def product_params
       params.require(:product).permit(:name, :price)
