@@ -27,4 +27,32 @@ RSpec.describe Order, type: :model do
       expect(order.vat_amount).to eq Order::VAT_AMOUNT
     end
   end
+
+  describe "#net_total" do
+    let(:order) { create(:order) }
+    let(:product1) { create(:product) }
+    let(:product2) { create(:product, name: "Widget 2", price: 100) }
+    let!(:line_item1) { create(:line_item, order: order, product: product1) }
+    let!(:line_item2) { create(:line_item, order: order, product: product2) }
+
+    subject { order.net_total }
+
+    it "calculates the total of line item amounts" do
+      expect(subject).to eq 2200
+    end
+  end
+
+  describe "#gross_total" do
+    let(:order) { create(:order) }
+    let(:product1) { create(:product) }
+    let(:product2) { create(:product, name: "Widget 2", price: 100) }
+    let!(:line_item1) { create(:line_item, order: order, product: product1) }
+    let!(:line_item2) { create(:line_item, order: order, product: product2) }
+
+    subject { order.gross_total }
+
+    it "calculates the total of line item amounts with VAT included" do
+      expect(subject).to eq 2640
+    end
+  end
 end

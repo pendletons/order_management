@@ -11,6 +11,14 @@ class Order < ActiveRecord::Base
 
   before_validation :set_default_order_date, :set_vat_amount
 
+  def net_total
+    line_items.inject(0) { |sum, li| sum + li.total }
+  end
+
+  def gross_total
+    net_total * VAT_AMOUNT
+  end
+
   private
 
     def set_default_order_date

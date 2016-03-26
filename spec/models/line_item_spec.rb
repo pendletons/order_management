@@ -24,4 +24,26 @@ RSpec.describe LineItem, type: :model do
       subject
     end
   end
+
+  describe "#product_price" do
+    let(:line_item) { build_stubbed(:line_item) }
+
+    subject { line_item.product_price }
+
+    it "delegates to product" do
+      expect(line_item.product).to receive(:price)
+      subject
+    end
+  end
+
+  describe "#total" do
+    let(:product) { create(:product) }
+    let(:line_item) { create(:line_item, product: product) }
+
+    subject { line_item.total }
+
+    it "calculates quantity * product price" do
+      expect(subject).to eq 2000
+    end
+  end
 end
