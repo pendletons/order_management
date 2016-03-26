@@ -1,10 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe Api::V1::LineItemsController, type: :controller do
+  let(:order) { create(:order) }
+  let(:product) { create(:product) }
+
   before(:each) { request.headers['Accept'] = "application/vnd.marketplace.v1" }
 
   describe "#create" do
-    let(:attr) { attributes_for(:line_item) }
+    let(:attr) { attributes_for(:line_item).merge(order_id: order.id, product_id: product.id) }
     subject { post :create, line_item: attr, format: :json }
 
     context "with valid attributes" do
@@ -17,8 +20,10 @@ RSpec.describe Api::V1::LineItemsController, type: :controller do
         line_item_response = JSON.parse(response.body, symbolize_names: true)
         expect(line_item_response).to eq(line_item: {
                                                       id: LineItem.last.id,
+                                                      order_id: order.id,
+                                                      product_id: product.id,
                                                       quantity: attr[:quantity],
-                                                      product_name: attr[:product][:name]
+                                                      product_name: product.name
                                                     })
       end
 
@@ -29,7 +34,8 @@ RSpec.describe Api::V1::LineItemsController, type: :controller do
     end
 
     context "with invalid attributes" do
-      let(:attr) { attributes_for(:line_item).except(:quantity) }
+      let(:attr) { attributes_for(:line_item).except(:quantity)
+                                             .merge(order_id: order.id, product_id: product.id) }
 
       it "does not create a line item" do
         expect { subject }.not_to change{LineItem.count}
@@ -38,7 +44,7 @@ RSpec.describe Api::V1::LineItemsController, type: :controller do
       it "renders the errors in JSON" do
         subject
         line_item = JSON.parse(response.body, symbolize_names: true)
-        expect(line_item[:errors]).to eq(quantity: ["can't be blank"])
+        expect(line_item[:errors]).to eq(quantity: ["can't be blank", "is not a number"])
       end
 
       it "fails" do
@@ -58,6 +64,8 @@ RSpec.describe Api::V1::LineItemsController, type: :controller do
         line_item_response = JSON.parse(response.body, symbolize_names: true)
         expect(line_item_response).to eq(line_item: {
                                                       id: line_item.id,
+                                                      order_id: line_item.order_id,
+                                                      product_id: line_item.product_id,
                                                       quantity: line_item.quantity,
                                                       product_name: line_item.product_name
                                                     })
@@ -87,6 +95,8 @@ RSpec.describe Api::V1::LineItemsController, type: :controller do
         line_item_response = JSON.parse(response.body, symbolize_names: true)
         expect(line_item_response).to eq(line_item: {
                                                       id: line_item.id,
+                                                      order_id: line_item.order_id,
+                                                      product_id: line_item.product_id,
                                                       quantity: attr[:quantity],
                                                       product_name: line_item.product_name
                                                     })
