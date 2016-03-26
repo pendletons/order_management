@@ -13,4 +13,15 @@ RSpec.describe LineItem, type: :model do
     it { is_expected.to belong_to :order }
     it { is_expected.to belong_to :product }
   end
+
+  describe "#product_name" do
+    let(:line_item) { build_stubbed(:line_item) }
+
+    subject { line_item.product_name }
+
+    it "delegates to product" do
+      expect(line_item.product).to receive(:name)
+      subject
+    end
+  end
 end
