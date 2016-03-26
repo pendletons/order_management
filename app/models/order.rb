@@ -1,6 +1,9 @@
 class Order < ActiveRecord::Base
   VAT_AMOUNT = 1.20
 
+  has_many :line_items
+  has_many :products, through: :line_items
+
   validates_presence_of :order_date, :vat_amount
   validates_numericality_of :vat_amount, greater_than_or_equal_to: 0
 

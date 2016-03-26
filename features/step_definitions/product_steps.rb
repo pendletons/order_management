@@ -3,7 +3,7 @@ Given(/^a product exists$/) do
 end
 
 When(/^an order does exist for that product$/) do
-  pending # Write code here that turns the phrase above into concrete actions
+  @line_item = create(:line_item, product_id: @product.id)
 end
 
 Then(/^attempt to delete the product$/) do

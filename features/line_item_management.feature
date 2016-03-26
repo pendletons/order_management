@@ -3,11 +3,13 @@ Feature: Line Item Management
 
   Scenario: Line item creation
     Given an order exists
+    And a product exists
     When valid line item information is provided
     Then a line item will be created
 
   Scenario: Line item updating
     Given an order exists
+    And a line item exists
     When valid line item update information is provided
     Then the line item will be updated
 

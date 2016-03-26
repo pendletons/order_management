@@ -90,9 +90,9 @@ Then(/^it can be moved to (.*) state$/) do |state|
 end
 
 Given(/^the order has a line item$/) do
-  pending # Write code here that turns the phrase above into concrete actions
+  @line_item = create(:line_item, order_id: @order.id)
 end
 
 Then(/^the order has no line items$/) do
-  pending # Write code here that turns the phrase above into concrete actions
+  # orders have no line items by default
 end

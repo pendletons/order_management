@@ -3,6 +3,7 @@ Feature: Line items
 
   Scenario Outline: Line items and orders
     Given an order exists
+    And a product exists
     When a line item is created <with_or_without_order?> a valid order id
     Then the line item is <valid_or_not_valid?>
 
@@ -13,6 +14,7 @@ Feature: Line items
 
   Scenario Outline: Line items and products
     Given a product exists
+    And an order exists
     When a line item is created <with_or_without_product?> a valid product id
     Then the line item is <valid_or_not_valid?>
 

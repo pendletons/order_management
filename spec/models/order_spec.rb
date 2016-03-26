@@ -7,6 +7,11 @@ RSpec.describe Order, type: :model do
     it { is_expected.to validate_numericality_of(:vat_amount).is_greater_than_or_equal_to(0) }
   end
 
+  describe "associations" do
+    it { is_expected.to have_many(:line_items) }
+    it { is_expected.to have_many(:products).through(:line_items) }
+  end
+
   describe "defaults" do
     let(:order) { Order.new }
 
