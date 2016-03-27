@@ -17,7 +17,9 @@ RSpec.describe Api::V1::OrdersController, type: :controller do
         order_response = JSON.parse(response.body, symbolize_names: true)
         expect(order_response).to eq(order: {
                                               id: Order.last.id,
-                                              order_date: attr[:order_date].to_s
+                                              order_date: attr[:order_date].to_s,
+                                              net_total: 0.0,
+                                              gross_total: 0.0
                                             })
       end
 
@@ -57,7 +59,9 @@ RSpec.describe Api::V1::OrdersController, type: :controller do
         order_response = JSON.parse(response.body, symbolize_names: true)
         expect(order_response).to eq(order: {
                                               id: order.id,
-                                              order_date: order.order_date.to_s
+                                              order_date: order.order_date.to_s,
+                                              net_total: 0.0,
+                                              gross_total: 0.0
                                             })
       end
 
@@ -87,7 +91,9 @@ RSpec.describe Api::V1::OrdersController, type: :controller do
         order_response = JSON.parse(response.body, symbolize_names: true)
         expect(order_response).to eq(order: {
                                               id: order.id,
-                                              order_date: new_date.to_s
+                                              order_date: new_date.to_s,
+                                              net_total: 0.0,
+                                              gross_total: 0.0
                                             })
       end
 
