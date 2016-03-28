@@ -55,4 +55,16 @@ RSpec.describe Order, type: :model do
       expect(subject).to eq 2640
     end
   end
+
+  describe "#destroy" do
+    let(:order) { create(:order) }
+
+    subject { order }
+
+    before { order.destroy }
+
+    it "does not delete the order" do
+      expect(subject.destroyed?).to be false
+    end
+  end
 end

@@ -11,6 +11,8 @@ class Order < ActiveRecord::Base
 
   before_validation :set_default_order_date, :set_vat_amount
 
+  before_destroy :verify_deletion
+
   def net_total
     line_items.inject(0) { |sum, li| sum + li.total }
   end
@@ -35,5 +37,9 @@ class Order < ActiveRecord::Base
 
     def past_order_date?
       order_date.is_a?(Date) && order_date < Date.current
+    end
+
+    def verify_deletion
+      false # orders cannot be deleted
     end
 end
