@@ -5,6 +5,28 @@ RSpec.describe Order, type: :model do
 
   describe "validations" do
     it { is_expected.to validate_numericality_of(:vat_amount).is_greater_than_or_equal_to(0) }
+
+    describe "updating" do
+      let(:order) { create(:order) }
+
+      context "when order can be changed" do
+        it "is valid" do
+          order.order_date = Date.current + 5.days
+          expect(order.valid?).to be true
+        end
+      end
+
+      context "when order cannot be changed" do
+        let!(:line_item) { create(:line_item, order: order) }
+
+        before { order.transition_to!(:placed) }
+
+        it "is invalid" do
+          order.order_date = Date.current + 5.days
+          expect(order.valid?).to be false
+        end
+      end
+    end
   end
 
   describe "associations" do

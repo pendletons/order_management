@@ -6,6 +6,7 @@ gem 'pg', '~> 0.15'
 gem 'active_model_serializers'
 gem 'responders'
 gem 'date_validator'
+gem 'statesman'
 
 group :development, :test do
   gem 'byebug'

@@ -7,6 +7,27 @@ RSpec.describe LineItem, type: :model do
     it { is_expected.to validate_presence_of :quantity }
 
     it { is_expected.to validate_numericality_of(:quantity).only_integer.is_greater_than(0) }
+
+    describe "updating" do
+      let(:line_item) { create(:line_item) }
+      let(:order) { line_item.order }
+
+      context "when order can be changed" do
+        it "is valid" do
+          line_item.quantity = 10
+          expect(line_item.valid?).to be true
+        end
+      end
+
+      context "when order cannot be changed" do
+        before { order.transition_to!(:placed) }
+
+        it "is invalid" do
+          line_item.quantity = 10
+          expect(line_item.valid?).to be false
+        end
+      end
+    end
   end
 
   describe "associations" do
