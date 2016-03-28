@@ -28,7 +28,7 @@ RSpec.describe Api::V1::OrdersController, type: :controller do
     end
 
     context "with invalid attributes" do
-      let(:attr) { attributes_for(:order).merge(order_date: "today") }
+      let(:attr) { attributes_for(:order).merge(order_date: 123) }
 
       it "does not create an order" do
         expect { subject }.not_to change{Order.count}
@@ -98,7 +98,7 @@ RSpec.describe Api::V1::OrdersController, type: :controller do
     end
 
     context "with invalid attributes" do
-      let(:attr) { attributes_for(:order).merge(order_date: "in 3 months") }
+      let(:attr) { attributes_for(:order).merge(order_date: 321) }
 
       it "does not update the order" do
         subject

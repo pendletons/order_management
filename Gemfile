@@ -5,6 +5,7 @@ gem 'pg', '~> 0.15'
 
 gem 'active_model_serializers'
 gem 'responders'
+gem 'date_validator'
 
 group :development, :test do
   gem 'byebug'

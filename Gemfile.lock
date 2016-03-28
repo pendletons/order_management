@@ -70,6 +70,9 @@ GEM
       railties (>= 3, < 5)
     cucumber-wire (0.0.1)
     database_cleaner (1.5.1)
+    date_validator (0.9.0)
+      activemodel
+      activesupport
     debug_inspector (0.0.2)
     diff-lcs (1.2.5)
     docile (1.1.5)
@@ -181,6 +184,7 @@ DEPENDENCIES
   byebug
   cucumber-rails
   database_cleaner
+  date_validator
   factory_girl_rails
   ffaker
   pg (~> 0.15)
